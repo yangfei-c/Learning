@@ -1,0 +1,9 @@
+#变量名=值，新建变量名等于内存创建一块区域，变量名指向该区域
+#变量名=变量名1只是赋予值，并未赋予地址
+name="Chen"
+print(name)
+newname=name
+print(newname)
+name="Fei"
+print(name)
+print(newname)
