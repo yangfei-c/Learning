@@ -3,6 +3,7 @@
 # step over不会进入子函数内部
 # step into会进入以便了解函数内部
 #break立即终止循环，且不单独使用只能放在循环内部
+#continue立即结束当前循环进入下一次循环
 count=5
 print("Hello(你只有五次机会)!")
 while count>=0:
