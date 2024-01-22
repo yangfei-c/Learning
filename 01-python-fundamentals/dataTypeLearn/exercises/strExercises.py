@@ -41,5 +41,16 @@ res=",".join(user_list)
 print("输入的姓名："+res)
 print("结束！")
 '''
+'''
+查询电脑上的某个目录下的文件判断文件的扩张名
+是否是png PNG如果是则输出
+'''
+import os
+
+data=os.listdir("C:/Users/acer/Pictures/Saved Pictures/img")
+for filename in data:
+    namelist=filename.split(".")
+    if namelist[-1].upper()=="PNG":
+        print(filename)
 
 
