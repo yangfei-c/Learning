@@ -1,7 +1,6 @@
 import mxnet.ndarray as nd
 import mxnet.autograd as ag
 import random
-
 from mxnet import autograd
 
 #生成数据
