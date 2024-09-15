@@ -1,27 +1,19 @@
-import matplotlib.pyplot as plt
 import random
-import numpy as np
 import torch
-from IPython import display
-from matplotlib_inline.backend_inline import set_matplotlib_formats
-#生成数据集
-num_inputs=2
+from d2l import torch as d2l
+
+def synthetic_data(w,b,num_examples):
+    X=torch.normal(0,1,(num_examples,len(w)))
+    #生成一个张量，形状(num_examples,len(w)),服从标准正态分布
+    y=torch.matmul(X,w)+b
+    return X,y.reshape((-1,1))#-1自动计算多少行
+
 num_examples=1000
-true_w=[2,-3.4]
+true_w=torch.tensor([2,-3.4])
 true_b=4.2
-features=torch.randn(num_examples,num_inputs,dtype=torch.float32)
-labels=true_w[0]*features[:,0]+true_w[1]*features[:,1]+true_b
-labels+=torch.tensor(np.random.normal(0,0.01,size=labels.size()),dtype=torch.float32)
-print(features[0],labels[0])
 
-
-def use_svg_display():
-    set_matplotlib_formats('svg')
-
-def set_figsize(figsize=(3.5, 2.5)):
-    use_svg_display()  # 调用use_svg_display设置SVG格式
-    plt.rcParams['figure.figsize'] = figsize  # 设置图像大小
-
-set_figsize()
-plt.scatter(features[:,1].numpy(),labels.numpy(),1)
-plt.show()  # 显示图像
+features,labels=synthetic_data(true_w,true_b,num_examples)
+print("features:",features[0],"\nlabels:",labels[0])
+d2l.set_figsize()
+d2l.plt.scatter(features[:,1].detach().numpy(),labels.detach().numpy(),1);
+d2l.plt.show()
