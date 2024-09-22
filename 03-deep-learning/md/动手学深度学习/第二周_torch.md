@@ -367,3 +367,103 @@ x2=torch.load('x_file',weights_only=True)
 print(x2)
 ```
 
+也可以保存模型参数，之后可以不用随机初始化模型参数直接读取文件中存储的参数
+
+```python
+#state_dict()字典，包含模型的所有可学习参数
+torch.save(net.state_dict(),'mlp.params')
+clone=MLP()
+clone.load_state_dict(torch.load('mlp.params',weights_only=True))
+```
+
+## 计算设备
+
+我们可以指定用于存储和计算的设备，
+
+CPU代表所有物理CPU和内存
+
+GPU只代表一个卡和相应的显存，如果有多个GPU我们使用torch.device(f'cuda:{i}')来表示第i块GPU
+
+# 第六章
+
+## 卷积神经网络
+
+CNN是一类强大的为处理图像数据而设计的神经网络
+
+多层感知机MLP很适合处理表格数据但是涉及到高维感知数据就不适用了
+
+### 互相关运算
+
+```python
+for i in range(Y.shape[0]):
+    for j in range(Y.shape[1]):
+        Y[i,j]=(X[i:i+h,j:j+w]*K).sum()
+#X输入局部区域与卷积核相乘并求和
+#h,w为卷积核大小
+```
+
+### 卷积层
+
+卷积层通过卷积核（filters）在输入数据上滑动，对局部区域进行加权求和操作，并将结果存储为输出特征图（feature map）。
+
+它可以帮助神经网络捕捉到输入数据的空间特征。
+
+```python
+class conv2d(nn.Module):
+    def __init__(self,kernel_size):
+        super().__init__()
+        self.weight=nn.Parameter(torch.rand(kernel_size))
+        self.bias=nn.Parameter(torch.zeros(1))
+        
+    def forward(self,x):
+        return corr2d(x,self.weight)+self.bias
+```
+
+### 图像中目标边缘检测
+
+#### 手动设计卷积核
+
+进行互相关运算时，如果水平元素相同则输出为零，否则输出为非零
+
+```python
+X=torch.ones((6,8))
+X[:,2:6]=0
+K=torch.tensor([[1.0,-1.0]])
+print(corr2d(X,K))
+```
+
+#### 学习卷积核
+
+遇到复杂数值的卷积核或者连续卷积层时，不可能手动设计卷积核，通过学习由X生成Y的卷积核
+
+```python
+X=X.reshape((1,1,6,8))
+#调整批量为1通道为1大小为6X8的四维形状满足conv2d输入数据格式要求
+Y=Y.reshape((1,1,6,7))
+lr=3e-2
+for i in range(10):
+    Y_hat=conv2d(X)
+    l=(Y_hat-Y)**2
+    conv2d.zero_grad()
+    l.sum().backward()
+    conv2d.weight.data[:]-=lr*conv2d.weight.grad
+    if(i+1)%2==0:
+        print(f'epoch{i+1},loss{l.sum():.3f}')
+```
+
+### 填充与步幅
+
+在输入图像的边缘进行填充元素防止丢失边缘像素
+
+采用调整步幅高效计算或缩减采样
+
+计算输出形状
+$$
+(\frac{h_{in}-k_h+2p}{s}+1,\frac{w_{in}-k_w+2p}{s}+1)
+$$
+
+$$
+p是填充，s是步幅，h×w为输入形状，k_h×k_w为卷积核形状
+$$
+
+### 

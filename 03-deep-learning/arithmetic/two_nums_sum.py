@@ -4,8 +4,7 @@
 并返回它们的数组下标。
 '''
 import time
-import time
-
+#哈希表解法比暴力解法要更高效这个思路很重要
 class Solution(object):
     # 哈希表解法
     def twoSum_hashmap(self, nums, target):
