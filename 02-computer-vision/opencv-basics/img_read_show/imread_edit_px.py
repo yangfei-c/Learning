@@ -2,7 +2,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 # 读取图像
-img = cv2.imread("../img/LinYunEr.jpg")
+img = cv2.imread("../../img/LinYunEr.jpg")
 
 # 创建一个与原图相同的图像，用于显示修改前的图像
 original_img = img.copy()
