@@ -10,7 +10,7 @@ import torch
 import torchvision
 from PIL import Image
 
-img_path=("../imgs/plane.jfif")
+img_path=("../imgs/cat.webp")
 img_test=Image.open(img_path)
 if img_test is None:
     print("文件不存在，请检查路径!")
@@ -22,7 +22,7 @@ transform=torchvision.transforms.Compose([
 img_test=transform(img_test)
 img_test=torch.reshape(img_test,(1,3,32,32))
 print(img_test.shape)
-model=torch.load("../model/model_10",weights_only=False)
+model=torch.load("../model/model_30",weights_only=False)
 print(model)
 
 model.eval()
