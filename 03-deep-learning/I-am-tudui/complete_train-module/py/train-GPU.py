@@ -5,30 +5,36 @@
 # @Email   : ccc420513@gmail.com
 # @File    : train-GPU.py
 # @Software: PyCharm
-import torch
 import time
+
+import torch
+import torch.nn as nn
 import torchvision
-from torch import nn
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
+
 class M_model(nn.Module):
     def __init__(self) -> None:
-        super(M_model,self).__init__()
-        self.model=nn.Sequential(
-            nn.Conv2d(3,32,5,1,2),
-            nn.MaxPool2d(2),
-            nn.Conv2d(32,32,5,1,2),
-            nn.MaxPool2d(2),
-            nn.Conv2d(32,64,5,1,2),
-            nn.MaxPool2d(2),
-            nn.Flatten(),
-            nn.Linear(64*4*4,64),
-            nn.Linear(64,10),
+        super(M_model, self).__init__()
+        self.model = nn.Sequential(
+            nn.Conv2d(3, 32, 5, 1, 2),  # Conv layer 1
+            nn.ReLU(),  # ReLU after Conv layer 1
+            nn.MaxPool2d(2),  # Pooling layer 1
+            nn.Conv2d(32, 32, 5, 1, 2),  # Conv layer 2
+            nn.ReLU(),  # ReLU after Conv layer 2
+            nn.MaxPool2d(2),  # Pooling layer 2
+            nn.Conv2d(32, 64, 5, 1, 2),  # Conv layer 3
+            nn.ReLU(),  # ReLU after Conv layer 3
+            nn.MaxPool2d(2),  # Pooling layer 3
+            nn.Flatten(),  # Flatten layer
+            nn.Linear(64 * 4 * 4, 64),  # Fully connected layer 1
+            nn.ReLU(),  # ReLU after Fully connected layer 1
+            nn.Linear(64, 10),  # Fully connected layer 2 (Output layer)
         )
-    def forward(self,x):
-        x=self.model(x)
-        return x
+
+    def forward(self, x):
+        return self.model(x)
 #准备数据集
 train_data=torchvision.datasets.CIFAR10(root="../dataset",train=True,
                 transform=torchvision.transforms.ToTensor(),download=True)
@@ -56,7 +62,7 @@ if torch.cuda.is_available():
     loss_function=loss_function.cuda()
 #优化器
 learning_rate=1e-2#科学计数法
-optimizer=torch.optim.SGD(m_model.parameters(),lr=learning_rate)
+optimizer=torch.optim.Adam(m_model.parameters(),lr=learning_rate)
 # 设置训练网络参数
 train_nums=0#记录训练次数
 test_nums=0#记录测试次数
