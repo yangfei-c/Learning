@@ -35,10 +35,10 @@ m_model=M_model()
 loss_function=nn.CrossEntropyLoss()
 
 #优化器
-learning_rate=5e-3#科学计数法
+learning_rate=1e-3#科学计数法
 optimizer=torch.optim.SGD(m_model.parameters(),lr=learning_rate)
 # 设置训练网络参数
-epoch=30#训练轮数
+epoch=50#训练轮数
 train_nums=0#记录训练次数
 test_nums=0#记录测试次数
 
