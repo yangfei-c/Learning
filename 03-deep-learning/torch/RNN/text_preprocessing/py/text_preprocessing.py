@@ -49,13 +49,15 @@ class Vocab:
             reserved_tokens = []
         # 按出现频率排序
         counter = count_corpus(tokens)
-        self._token_freqs = sorted(counter.items(), key=lambda x: x[1],
+        self._token_freqs = sorted(counter.items(), key= (lambda x: x[1]),
                                    reverse=True)#counter.items()二元组
                                 #lambda 是一个用于创建匿名函数的关键字，格式为：lambda 参数: 表达式
-        # 未知词元的索引为0
+        #初始化创建
         self.idx_to_token = ['<unk>'] + reserved_tokens
         self.token_to_idx = {token: idx
                              for idx, token in enumerate(self.idx_to_token)}
+
+        #从_token_freqs取数据加入idx_to_token和_token_to_idx中
         for token, freq in self._token_freqs:
             if freq < min_freq:
                 break
@@ -68,7 +70,7 @@ class Vocab:
 
     def __getitem__(self, tokens):
         if not isinstance(tokens, (list, tuple)):
-            return self.token_to_idx.get(tokens, self.unk)
+            return self.token_to_idx.get(tokens, self.unk)#键不存在时返回的默认值
         return [self.__getitem__(token) for token in tokens]
 
     def to_tokens(self, indices):
@@ -95,4 +97,22 @@ def count_corpus(tokens):
     return collections.Counter(tokens)
 
 vocab=Vocab(tokens)#词元化的列表传入进行词表构建
-print(list(vocab.token_to_idx.items())[:10])
+# print(list(vocab.token_to_idx.items())[:10])
+# print(vocab.to_tokens([2,4,19]))
+# print(vocab['the'])
+# for i in [0, 10]:
+#     print('文本:', tokens[i])
+#     print('索引:', vocab[tokens[i]])
+def load_corpus_time_machine(max_tokens=-1):
+    lines=read_time_machine()
+    tokens=tokenize(lines,'char')
+    vocab=Vocab(tokens)
+    corpus=[vocab[token] for line in tokens for token in tokens]
+    if max_tokens>0:
+        corpus=corpus[:max_tokens]
+    return corpus,vocab
+
+corpus,vocab=load_corpus_time_machine()
+print(len(corpus))
+print(len(vocab))
+
