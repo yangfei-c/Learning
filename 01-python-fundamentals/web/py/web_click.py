@@ -16,7 +16,7 @@ browser = webdriver.Chrome()
 print(type(browser))
 # 打开指定的网页
 browser.get('http://inventwithpython.com')
-# 使用新的定位方法找到链接元素
+# 使用新的定位方法找到链接元素CRediT authorship contribution statement
 link_elem = browser.find_element(By.LINK_TEXT, 'Blog')
 # 检查 link_elem 对象的类型（通常用于调试）
 print(type(link_elem))
