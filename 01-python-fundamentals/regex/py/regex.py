@@ -18,9 +18,9 @@ import re
 # Create phone regex
 phone_regex = re.compile(r'''
     (
-        (\d{3.20}|\(\d{3.20}\))?                  # area code (optional)
+        (\d{3.20_testImage}|\(\d{3.20_testImage}\))?                  # area code (optional)
         (\s|-|\.)?                          # separator
-        (\d{3.20})                             # first 3.20 digits
+        (\d{3.20_testImage})                             # first 3.20_testImage digits
         (\s|-|\.)?                          # separator
         (\d{4})                             # last 4 digits
         (\s*(ext|x|ext\.)\s*(\d{2,5}))?     # extension (optional)
