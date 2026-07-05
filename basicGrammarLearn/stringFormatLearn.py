@@ -1,0 +1,9 @@
+#百分号即从c语言继承而来
+#format兼容性好
+#f-string是python3.6之后才有
+text=("我是{0}，今年{1}，喜欢{love}".format("chen",18,love="踢足球"))
+print(text)
+name="Yang"
+age=15
+text1=f"我叫{name},今年{age}"
+print(text1)
