@@ -1,6 +1,6 @@
-# AI Learning Notes
+# Learning Notes
 
-本仓库用于整理个人在 Python、OpenCV 和深度学习方向的学习笔记、练习代码与实验记录。
+本仓库用于整理个人在 Python、OpenCV 和深度学习方向的学习记录。
 
 ## Directory Structure
 
@@ -14,8 +14,4 @@
 
 ### 03-deep-learning
 
-该目录包含 PyTorch 和深度学习练习代码、Notebook、图片素材与学习笔记。内容覆盖张量与模型训练、Dataset/DataLoader、TensorBoard、模型保存加载、MLP、CNN、LeNet、AlexNet、VGG、GoogLeNet、RNN、GRU、LSTM、注意力机制、线性回归、softmax 回归和相关笔记。
-
-## Notes
-
-本仓库由 Learning、Python-ReLearn 和 DeepLearning 三个早期学习仓库整合而成，并保留了原始 Git 提交历史。
+该目录包含 PyTorch 和深度学习练习代码、Notebook、图片素材与学习笔记。内容覆盖张量与模型训练、Dataset/DataLoader、TensorBoard、模型保存加载、MLP、CNN、LeNet、AlexNet、VGG、GoogLeNet、RNN、GRU、LSTM、注意力机制、线性回归、softmax 回归。
